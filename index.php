@@ -5,15 +5,26 @@
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>Home</title>
+
+            
         </head>
         <body>
             
 
                 <?php
+                /*estrutura do banco de dados para futuras alterações
+                nome_empresa = nome
+                nome_fantasia = fantasia
+                data abertura = abertura
+                matriz_filial = tipo
+                logradouro = logradouro
+                nummero = numero
+                complemento = complemento
+                situacao = status 
+                */
 
             /* estrutura da API*/
             if(isset($_GET['enviar'])){
-                echo "If do get";
                 $cnpj = $_GET['cnpj'];
                 $link = "https://www.receitaws.com.br/v1/cnpj/$cnpj";
                 $iniciar= curl_init($link);
@@ -38,7 +49,23 @@
                 $complemento = trim($_POST['complemento']);
                 $status = trim($_POST['situacao']);
 
-                $conexao = new mysqli('localhost','root','','dados');            }
+                $conexao = new mysqli('localhost','root','','dados');
+            
+            if($conexao -> connect_error){
+                echo "Erro ao conectar no banco de dados".$conexao -> connect_error;
+            }
+            $exe ="INSERT INTO empresas(nome_empresa, nome_fantasia, data_abertura, matriz_filial, logradouro, numero, complemento, situacao)
+            VALUES('$nome', '$fantasia', '$abertura', '$tipo', '$logradouro', '$numero', '$complemento', '$status')";
+            
+            $valores = $conexao->query($exe);
+            
+            if($valores){
+                echo "Cadastro de CNPJ realizado com sucesso";
+            }else{
+                echo "Erro ao cadastrar CNPJ".$conexao->connect_error;
+            }
+            $conexao->close();
+            }
 
 
 
