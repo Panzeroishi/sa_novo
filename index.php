@@ -9,10 +9,11 @@
         <body>
             
 
-            <?php
+                <?php
 
             /* estrutura da API*/
             if(isset($_GET['enviar'])){
+                echo "If do get";
                 $cnpj = $_GET['cnpj'];
                 $link = "https://www.receitaws.com.br/v1/cnpj/$cnpj";
                 $iniciar= curl_init($link);
@@ -22,12 +23,22 @@
                 $resultados = json_decode(curl_exec($iniciar));
                 foreach($resultados as $chave=>$texto){
                 $$chave = $texto;
+                unset($_GET['enviar']);
             }
             curl_close($iniciar);
-            }elseif(isset($_POST['cadastrar'])){
-                $nome = trim($_POST['empresa']);
-                var_dump($nome);
+            
             }
+            if(isset($_POST['cadastrar'])){
+                $nome = trim($_POST['empresa']);
+                $fantasia = trim($_POST['fantasia']);
+                $abertura =trim($_POST['abertura_data']);
+                $tipo = trim($_POST['matriz']);
+                $logradouro = trim($_POST['logradouro']);
+                $numero = trim($_POST['numero']);
+                $complemento = trim($_POST['complemento']);
+                $status = trim($_POST['situacao']);
+
+                $conexao = new mysqli('localhost','root','','dados');            }
 
 
 
