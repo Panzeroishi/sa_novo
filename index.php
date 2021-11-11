@@ -58,13 +58,29 @@
             VALUES('$nome', '$fantasia', '$abertura', '$tipo', '$logradouro', '$numero', '$complemento', '$status')";
             
             $valores = $conexao->query($exe);
+
             
             if($valores){
                 echo "Cadastro de CNPJ realizado com sucesso";
+                
             }else{
                 echo "Erro ao cadastrar CNPJ".$conexao->connect_error;
+                
             }
             $conexao->close();
+            }
+
+            elseif(isset($_GET['buscar'])){
+            /*capturando os dados*/
+                $pesquisar = $_GET['pesquisar'];
+
+                /*fazendo a conexão ao banco*/
+                $conexao = new mysqli('localhost','root','','dados');
+
+                /*validando a conexão*/
+                if($conexao->connect_error){
+                    echo "";
+                }
             }
 
 
@@ -82,6 +98,15 @@
         <input type="submit" name= "enviar">
 
 
+        </form>
+
+
+        <form action="#" method = "get">
+            <label for="">Pesquisar</label>
+
+            <input type="text" name = "pesquisar">
+
+            <input type="submit" name = "buscar" value= "Pesquisar">
         </form>
 
 
